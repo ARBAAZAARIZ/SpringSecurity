@@ -1,0 +1,4 @@
+package com.arbaaz.SpringSecurity8.config;
+
+public class AuthController {
+}

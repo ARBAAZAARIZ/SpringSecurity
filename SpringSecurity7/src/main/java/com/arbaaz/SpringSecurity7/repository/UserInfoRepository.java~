@@ -1,0 +1,4 @@
+package com.arbaaz.SpringSecurity7;
+
+public interface UserInfoRepository {
+}

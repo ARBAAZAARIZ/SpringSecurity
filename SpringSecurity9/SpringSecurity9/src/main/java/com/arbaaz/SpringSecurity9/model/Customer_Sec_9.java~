@@ -1,0 +1,24 @@
+package com.arbaaz.SpringSecurity9.model;
+
+import jakarta.persistence.*;
+import lombok.Data;
+
+import java.util.List;
+
+@Entity
+@Data
+public class Customer_Sec_9 {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private int id;
+
+    @Column(nullable = false,unique = true)
+    private String username;
+
+    @Column(nullable = false)
+    private String password;
+
+    @OneToMany(mappedBy = "customer")
+    private List<Authority> authorities;
+}

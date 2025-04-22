@@ -1,0 +1,20 @@
+
+.material-symbols-outlined {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 900,
+  'GRAD' 0,
+  'opsz' 48;
+  
+  font-size: 2.5rem;
+}
+
+.person-icon {
+    font-size: 48px; /* Bigger size for profile icon */
+    font-variation-settings: 'FILL' 0, 'wght' 700, 'GRAD' 0, 'opsz' 48;
+  }
+  
+  .logout-icon {
+    font-size: 36px; /* Smaller size for logout icon */
+    font-variation-settings: 'FILL' 1, 'wght' 600, 'GRAD' 0, 'opsz' 48;
+  }

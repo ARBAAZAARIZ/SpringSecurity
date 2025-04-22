@@ -1,0 +1,16 @@
+package com.arbaaz.SpringSecurity8.controller;
+
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+@RestController
+@RequestMapping("/api/auth")
+public class CSRFController {
+
+    @GetMapping("/csrf-token")
+    public ResponseEntity<Void> getCsrfToken(){
+        return ResponseEntity.ok().build();
+    }
+}

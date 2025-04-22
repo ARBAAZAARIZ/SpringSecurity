@@ -1,0 +1,30 @@
+package com.arbaaz.SpringSecurity8.service;
+
+import com.arbaaz.SpringSecurity8.model.Contact;
+import com.arbaaz.SpringSecurity8.repository.ContactRepository;
+import com.arbaaz.SpringSecurity8.responseWrapper.ResponseWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+@Service
+public class ContactService {
+
+    @Autowired
+    ContactRepository contactRepository;
+
+    @Autowired
+    ResponseWrapper responseWrapper;
+
+
+    public ResponseEntity<?> saveContactInquiryDetails(Contact contact){
+
+        Contact contactInfoSaved=contactRepository.save(contact);
+        System.out.println(contactInfoSaved);
+        responseWrapper.setMessage("Contact Inquiry saved");
+        responseWrapper.setData(contactInfoSaved);
+        return new ResponseEntity<>(responseWrapper, HttpStatus.OK);
+    }
+
+}

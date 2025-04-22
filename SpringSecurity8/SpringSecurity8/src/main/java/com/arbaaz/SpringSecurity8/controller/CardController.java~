@@ -1,0 +1,17 @@
+package com.arbaaz.SpringSecurity8.controller;
+
+import com.arbaaz.SpringSecurity8.service.CardService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+
+public class CardController {
+
+    @Autowired
+    CardService cardService;
+
+
+    public ResponseEntity<?> getCardDetail(long id){
+        return cardService.getCardDetail(id);
+    }
+
+}

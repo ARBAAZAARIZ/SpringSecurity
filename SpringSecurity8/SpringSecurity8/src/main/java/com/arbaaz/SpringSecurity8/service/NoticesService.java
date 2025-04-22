@@ -1,0 +1,44 @@
+package com.arbaaz.SpringSecurity8.service;
+
+import com.arbaaz.SpringSecurity8.model.Notices;
+import com.arbaaz.SpringSecurity8.repository.NoticeRepository;
+import com.arbaaz.SpringSecurity8.responseWrapper.ResponseWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.CacheControl;
+import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+@Service
+public class NoticesService {
+
+    @Autowired
+    NoticeRepository noticeRepository;
+
+    @Autowired
+    ResponseWrapper responseWrapper;
+
+    public ResponseEntity<?> getNoticesDetails(){
+
+        List<Notices> notices=noticeRepository.findByActiveNotice();
+
+        if(notices.isEmpty()){
+            responseWrapper.setMessage("No Notices found");
+            responseWrapper.setData(null);
+        }
+        else{
+            responseWrapper.setMessage("This are the Notices found");
+            responseWrapper.setData(notices);
+        }
+
+        return ResponseEntity.ok().
+                cacheControl(CacheControl.maxAge(60, TimeUnit.SECONDS))
+                .body(responseWrapper);
+
+    }
+
+
+
+}

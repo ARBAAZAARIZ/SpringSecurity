@@ -1,0 +1,25 @@
+.winky-rough {
+    font-family: "Winky Rough", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-style: normal;
+  }
+
+
+ 
+.caveat {
+  font-family: "Caveat", cursive;
+  font-optical-sizing: auto;
+  font-weight: 800;
+  font-style: normal;
+}
+.navbar-nav .nav-link {
+  display: block;
+  padding: 10px;
+  font-size: 1.6rem; /* Adjusted for better mobile readability */
+}
+
+.navbar-collapse {
+  max-width: 40%; /* Prevent full width */
+  margin: 0 auto; /* Center dropdown */
+}

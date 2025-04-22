@@ -1,0 +1,24 @@
+package com.arbaaz.SpringSecurity7.events;
+
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.context.event.EventListener;
+import org.springframework.security.authentication.event.AbstractAuthenticationFailureEvent;
+import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
+import org.springframework.stereotype.Component;
+
+@Component
+@Slf4j
+public class AuthenticationEvents {
+
+
+    @EventListener
+    public void onSuccess(AuthenticationSuccessEvent successEvent){
+        log.info("Login successful for user : {}",successEvent.getAuthentication().getName());
+    }
+
+    public void onFail(AbstractAuthenticationFailureEvent failureEvent){
+        log.info("Login failed for user : {} due to :{}",failureEvent.getAuthentication().getName(),
+                failureEvent.getException().);
+    }
+
+}

@@ -1,0 +1,38 @@
+package com.arbaaz.SpringSecurity9.config;
+
+import com.arbaaz.SpringSecurity9.model.Customer;
+import com.arbaaz.SpringSecurity9.repository.CustomerRepository;
+import jakarta.transaction.Transactional;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.stream.Collectors;
+
+@Service
+@Transactional
+public class SpringSecurityUserDetailService implements UserDetailsService {
+
+    @Autowired
+    CustomerRepository customerRepository;
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+       Customer customer= customerRepository.findByUsername(username).orElseThrow(
+               ()-> new UsernameNotFoundException("User not found"));
+
+        List<GrantedAuthority> authorities=customer.getAuthorities().stream().map(authority->
+                new SimpleGrantedAuthority(authority.getName())).collect(Collectors.toList());
+
+
+
+        return new User(customer.getUsername(), customer.getPassword(), authorities);
+    }
+}

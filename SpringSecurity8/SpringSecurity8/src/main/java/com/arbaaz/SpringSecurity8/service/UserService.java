@@ -1,0 +1,125 @@
+package com.arbaaz.SpringSecurity8.service;
+
+import com.arbaaz.SpringSecurity8.model.*;
+import com.arbaaz.SpringSecurity8.repository.*;
+import com.arbaaz.SpringSecurity8.responseWrapper.ProfileResponse;
+import com.arbaaz.SpringSecurity8.responseWrapper.ResponseWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Optional;
+
+@Service
+public class UserService {
+
+    @Autowired
+    NexusCustomerRepository nexusCustomerRepository;
+
+    @Autowired
+    PasswordEncoder passwordEncoder;
+
+    @Autowired
+    ResponseWrapper responseWrapper;
+
+    public ResponseEntity<?> createNewUser(NexusCustomer nexusCustomer){
+        nexusCustomer.setPwd(passwordEncoder.encode(nexusCustomer.getPwd()));
+
+        NexusCustomer newUSer=nexusCustomerRepository.save(nexusCustomer);
+
+        if(newUSer.getCustomerId()>0){
+            responseWrapper.setMessage("Successfully Created User");
+            responseWrapper.setData(newUSer);
+            return ResponseEntity.status(HttpStatus.CREATED).body(responseWrapper);
+        }else{
+            responseWrapper.setMessage("Failed to Create User");
+            responseWrapper.setData(null);
+            return ResponseEntity.badRequest().body(responseWrapper);
+        }
+    }
+
+    public ResponseEntity<?> getUSerDetailsAfterLogin(Authentication authentication){
+        Optional<NexusCustomer> loggedInUser=nexusCustomerRepository.findByEmail(authentication.getName());
+        if (loggedInUser.isPresent()){
+            System.out.println(loggedInUser.get());
+            responseWrapper.setMessage("User Found");
+            responseWrapper.setData(loggedInUser.get());
+            return ResponseEntity.ok().body(responseWrapper);
+        }else{
+            responseWrapper.setMessage("User Not Found");
+            responseWrapper.setData(null);
+            return ResponseEntity.badRequest().body(responseWrapper);
+        }
+    }
+
+    @Autowired
+    ProfileResponse profileResponse;
+
+    @Autowired
+    AccountRepository accountRepository;
+
+
+    @Autowired
+    CardRepository cardRepository;
+
+    @Autowired
+    LoansRepository loansRepository;
+
+    @Autowired
+    AccountTransactionRepository accountTransactionRepository;
+
+    public ResponseEntity<?> getProfileDetails(Authentication authentication){
+
+        NexusCustomer nexusCustomer=nexusCustomerRepository.findByEmail(authentication.getName()).orElseThrow(
+                ()-> {throw new UsernameNotFoundException("User Not found with username "+authentication.getName());}
+        );
+
+        profileResponse.setName(nexusCustomer.getName());
+        profileResponse.setEmail(nexusCustomer.getEmail());
+
+       Optional <Accounts> account=accountRepository.findByCustomerId(nexusCustomer.getCustomerId());
+
+        account.ifPresent(foundAccount -> profileResponse.setAccount(foundAccount));
+        if(!account.isPresent()){
+            profileResponse.setAccount(null);
+        }
+
+
+        List<Card> cards=cardRepository.findByCustomer(nexusCustomer.getCustomerId());
+        if(!cards.isEmpty()){
+            profileResponse.setCard(cards);
+        }else{
+            profileResponse.setCard(null);
+        }
+
+        List<Loans> loans=loansRepository.findByCustomerIdOrderByStartDtDesc(nexusCustomer.getCustomerId());
+
+        if (!loans.isEmpty()){
+            profileResponse.setLoans(loans);
+        }else {
+            profileResponse.setLoans(null);
+        }
+
+        List<AccountTransactions> accountTransactions=accountTransactionRepository.findByCustomerOrderByTransactionDtDesc(nexusCustomer.getCustomerId());
+
+        if (!accountTransactions.isEmpty()){
+            profileResponse.setAccountTransactions(accountTransactions);
+        }else{
+            profileResponse.setAccountTransactions(null);
+        }
+
+        profileResponse.setMessage("Profile Found. If any field is null then it means that field is not found in your account.");
+
+        return ResponseEntity.ok().body(profileResponse);
+
+
+    }
+
+
+
+}

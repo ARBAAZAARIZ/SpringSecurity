@@ -1,0 +1,9 @@
+package com.arbaaz.SpringSecurity9.model;
+
+public class AdminPanel {
+
+    private int id;
+    private String projectName;
+    private String projectDescription;
+    
+}

@@ -1,0 +1,21 @@
+package com.arbaaz.SpringSecurity8.responseWrapper;
+
+import com.arbaaz.SpringSecurity8.model.*;
+import lombok.Data;
+import org.springframework.stereotype.Component;
+
+import java.util.List;
+
+@Component
+@Data
+public class ProfileResponse {
+
+    private String name;
+    private String email;
+    private Accounts account;
+    private List<Card> card;
+    private List<Loans> loans;
+    private List<AccountTransactions> accountTransactions;
+
+    private String message;
+}
