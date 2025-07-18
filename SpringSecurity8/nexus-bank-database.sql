@@ -4,8 +4,13 @@ show tables;
 select * from user_info;
 insert into user_info (id,name,pwd,role) value (2,"aariz","{bcrypt}$2a$12$kuNzL.7b8yVKe88a/H6WZ.F9OEAmjN/d7aGd2QuCH0c/PgObJHGB.","admin"); -- aariz1234
 
+update nexus_customer set pwd="{bcrypt}$2a$12$aydRSPYm7WbdHJf.we8.hOlEDVzfnFJUkz.Z861Q9mKt3vYGjOvqa" where email="daraksha@gmail.com";  -- Arbaaz#7781
+
 desc nexus_customer;
-select * from nexus_customer;
+select * from nexus_customer; 
+select * from nexus_customer where email="daraksha@gmail.com";
+insert into nexus_customer (customer_id,created_date,email,mobile_number,name,pwd,role)values
+(1,"2025-04-14 10:46:49.671241","md.rocks788@gmail.com","8591237781","arbaaz","{bcrypt}$2a$12$Bz3Gt8Yl1plrtpyW4c8eOuNSqz.kSkGcOX8h5F88BuTrJZmtPc6xS","ADMIN"); -- Arbaaz#7781
 
 delete from nexus_customer where name ="adc";
  SET SQL_SAFE_UPDATES = 0;
@@ -80,3 +85,7 @@ VALUES
 
 INSERT INTO `account_transactions` (`transaction_id`, `account_number`, `customer_id`, `transaction_dt`, `transaction_type`, `transaction_amt`, `closing_balance`, `create_dt`, `transaction_summary`) 
 values ('TXN007', 457896321, 52, '2025-04-19 12:25:00', 'Deposit', 170000, 110000, CURDATE(), 'ATM withdrawal');
+
+select * from authority; 
+
+insert into authority (id,name,customer_id) values (1,"ADMIN",1);

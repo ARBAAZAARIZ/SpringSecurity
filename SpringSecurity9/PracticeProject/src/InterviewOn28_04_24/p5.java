@@ -1,0 +1,23 @@
+package InterviewOn28_04_24;
+
+
+// checking if number is palindrome
+
+public class p5 {
+    public static void main(String[] args) {
+        System.out.println(Math.round(3.7));
+        System.out.println(Math.ceil(3.7));
+
+        int num=133;
+        int rev=0;
+        int temp=num;
+        while(temp>0){
+
+            int digit=temp%10;
+            rev=rev*10+digit;
+            temp=temp/10;
+        }
+
+        System.out.println(rev==num);
+    }
+}

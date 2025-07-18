@@ -1,0 +1,6 @@
+package com.arbaaz.SpringSecurity11.config;
+
+import org.springframework.security.authentication.AuthenticationProvider;
+
+public class NexusCustomeAuthentication implements AuthenticationProvider {
+}

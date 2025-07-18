@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
@@ -74,7 +75,7 @@ public class ProjectSecurityConfig {
             .requestMatchers("/notices","/contact","/register","/api/auth/csrf-token","/auth/login").permitAll());
 
          http.formLogin(AbstractHttpConfigurer::disable);
-         http.httpBasic(AbstractHttpConfigurer::disable);
+         http.httpBasic(Customizer.withDefaults());
          return http.build();
     }
 

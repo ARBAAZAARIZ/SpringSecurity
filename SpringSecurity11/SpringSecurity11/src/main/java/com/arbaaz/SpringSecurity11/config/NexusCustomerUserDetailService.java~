@@ -1,0 +1,37 @@
+package com.arbaaz.SpringSecurity11.config;
+
+import com.arbaaz.SpringSecurity11.model.NexusCustomer;
+import com.arbaaz.SpringSecurity11.repository.NexusCustomerRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class NexusCustomerUserDetailService implements UserDetailsService {
+
+
+    @Autowired
+    NexusCustomerRepository nexusCustomerRepository;
+
+
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        System.out.println(username);
+        NexusCustomer nexusCustomer=nexusCustomerRepository.findByEmail(username).orElseThrow(
+                () -> new UsernameNotFoundException("User don't Exist with username " + username)
+
+        );
+        System.out.print(nexusCustomer.getEmail());
+        List<GrantedAuthority> authorities=List.of(new SimpleGrantedAuthority(nexusCustomer.getRole()));
+        return new User(nexusCustomer.getEmail(),nexusCustomer.getPwd(),authorities);
+    }
+}

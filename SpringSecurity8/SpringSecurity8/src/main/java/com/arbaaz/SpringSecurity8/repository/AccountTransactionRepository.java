@@ -12,6 +12,6 @@ import java.util.List;
 public interface AccountTransactionRepository extends JpaRepository<AccountTransactions,String> {
 
 
-    @Query("SELECT at FROM AccountTransactions at WHERE at.customer.customerId=:customerId ORDER BY at.transactionDt DESC")
-    List<AccountTransactions> findByCustomerOrderByTransactionDtDesc( @Param("customerId") long customerId);
+        @Query("SELECT at FROM AccountTransactions at WHERE at.customer.customerId=:customerId ORDER BY at.transactionDt DESC")
+        List<AccountTransactions> findByCustomerOrderByTransactionDtDesc( @Param("customerId") long customerId);
 }

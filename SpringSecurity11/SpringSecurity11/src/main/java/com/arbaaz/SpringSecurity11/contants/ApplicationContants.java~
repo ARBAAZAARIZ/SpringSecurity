@@ -1,0 +1,8 @@
+package com.arbaaz.SpringSecurity11.contants;
+
+public final class ApplicationContants {
+
+    public static final String JWT_SECRECT_KEY="JWT_SECRECT";
+    public static final String JWT_SECRECT_DEFAULT_VALUE="JWT_SECRECT_DEFAULT_VALUE";
+    public static final String JWT_HEADER="Authorization";
+}

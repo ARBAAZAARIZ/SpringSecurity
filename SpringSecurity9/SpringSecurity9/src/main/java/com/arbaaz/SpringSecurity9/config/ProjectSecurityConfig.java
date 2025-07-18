@@ -1,6 +1,8 @@
 package com.arbaaz.SpringSecurity9.config;
 
 import com.arbaaz.SpringSecurity9.filter.CsrfCookieFilter;
+import com.arbaaz.SpringSecurity9.filter.RequestValidationAfterFilter;
+import com.arbaaz.SpringSecurity9.filter.RequestValidationBeforeFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -56,6 +58,8 @@ public class ProjectSecurityConfig {
         http.csrf(csrfConfig->csrfConfig.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
                         .ignoringRequestMatchers("/contact","/register","/logout")
                         .csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse()))
+                .addFilterBefore(new RequestValidationBeforeFilter(),BasicAuthenticationFilter.class)
+                .addFilterAfter(new RequestValidationAfterFilter(),BasicAuthenticationFilter.class)
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class);
 
 

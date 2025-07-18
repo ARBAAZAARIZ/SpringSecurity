@@ -1,0 +1,22 @@
+package com.arbaaz.SpringSecurity11.controller;
+
+import com.arbaaz.SpringSecurity11.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@RequestMapping("/auth")
+public class UserController {
+    
+    @Autowired
+    private UserService userService;
+
+    @GetMapping("/user")
+    public ResponseEntity<?> getUserDetails(Authentication authentication){
+        return userService.getUserDetails(authentication);
+    }
+
+
+}

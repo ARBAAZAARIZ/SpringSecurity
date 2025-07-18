@@ -32,9 +32,6 @@ const routes = createBrowserRouter([
         path:'/notices',
         element:<Notices/>
       },{
-        path:'/login',
-        element:<Login/>
-      },{
         path:'/contact',
         element:<Contact/>
       },{
