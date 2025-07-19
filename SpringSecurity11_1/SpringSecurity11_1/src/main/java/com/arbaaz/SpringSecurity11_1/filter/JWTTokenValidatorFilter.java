@@ -75,7 +75,7 @@ public class JWTTokenValidatorFilter extends OncePerRequestFilter {
         String path = request.getServletPath();
         System.out.println("ValidatorFilter: path = " + path );
         System.out.println(path.equals("/api/auth/login"));
-        return  path.equals("/api/auth/login");
+        return  path.equals("/api/auth/login")  || path.equals("/api/auth/csrf");
     }
 
 }
