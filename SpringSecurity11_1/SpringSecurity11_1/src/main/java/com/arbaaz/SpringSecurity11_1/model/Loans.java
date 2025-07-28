@@ -1,5 +1,6 @@
 package com.arbaaz.SpringSecurity11_1.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 import lombok.ToString;
@@ -19,6 +20,7 @@ public class Loans {
 
     @ManyToOne
     @JoinColumn(name = "customer_id")
+    @JsonIgnore
     private NexusCustomer customer;  // Reference to the customer
 
     @Temporal(TemporalType.DATE)

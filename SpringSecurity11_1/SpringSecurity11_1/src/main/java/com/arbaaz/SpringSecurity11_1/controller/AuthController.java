@@ -8,7 +8,7 @@ import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
+
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -67,7 +67,7 @@ public class AuthController {
                     .claim("authorities", authentication.getAuthorities().stream().map(
                             GrantedAuthority::getAuthority).collect(Collectors.joining(",")))
                     .issuedAt(new Date())
-                    .expiration(new Date((new Date()).getTime() + 900000))
+                    .expiration(new Date((new Date()).getTime() + 120000))
                     .signWith(secretKey)
                     .compact();
 

@@ -4,6 +4,7 @@ import com.arbaaz.SpringSecurity11_1.filter.CsrfCookieFilter;
 import com.arbaaz.SpringSecurity11_1.filter.JWTTokenGeneratorFilter;
 import com.arbaaz.SpringSecurity11_1.filter.JWTTokenValidatorFilter;
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -59,7 +60,7 @@ public class ProjectSecurityConfig {
                 requests.requestMatchers("/api/auth/login").permitAll()
                         .requestMatchers("/api/auth/csrf").permitAll()
                         .requestMatchers("/register").permitAll()
-                        .requestMatchers("/auth/user").authenticated()
+                        .requestMatchers("/auth/user","/auth/loans").authenticated()
                         .anyRequest().authenticated());
 
         http.csrf(csrfConfig->csrfConfig.csrfTokenRequestHandler(csrfTokenRequestAttributeHandler)
@@ -68,6 +69,12 @@ public class ProjectSecurityConfig {
                 .addFilterAfter(new CsrfCookieFilter(), BasicAuthenticationFilter.class)
                 .addFilterAfter(new JWTTokenGeneratorFilter(evn), BasicAuthenticationFilter.class)
                 .addFilterBefore(new JWTTokenValidatorFilter(evn), BasicAuthenticationFilter.class);
+
+                http.exceptionHandling(ex->ex.authenticationEntryPoint((request, response, authException) -> {
+                    response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+                    response.setHeader("Location","http://localhost:5173/login");
+                    response.sendError(HttpServletResponse.SC_UNAUTHORIZED,"JWT expired or invalid session");
+                }));
 
 
 

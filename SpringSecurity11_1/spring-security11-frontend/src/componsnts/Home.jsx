@@ -23,7 +23,7 @@ export default function Home() {
       return;
     }
 
-  const response = axios.get("http://localhost:8080/auth/user", {
+    const response = axios.get("http://localhost:8080/auth/user", {
       headers: {
         Authorization: jwtToken, // already contains "Bearer ..."
         'X-XSRF-TOKEN': csrfToken
@@ -32,7 +32,7 @@ export default function Home() {
     })
       .then(response => {
         console.log(response.data);
-        
+
         setUser(response.data);
       })
       .catch(err => {
@@ -58,6 +58,14 @@ export default function Home() {
 
       <button className="btn btn-danger" onClick={handleLogout}>Logout</button>
 
+      <br />
+      <br />
+      <button className="btn btn-warning me-2">
+        <Link to="/loans" className="text-white text-decoration-none">loans</Link>
+      </button>
+      <button className="btn btn-info">
+        <Link to="/accounts" className="text-white text-decoration-none">Accounts</Link>
+      </button>
       <hr />
 
       {user ? (

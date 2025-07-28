@@ -31,6 +31,7 @@ export default function Login() {
 
         sessionStorage.setItem("roles", JSON.stringify(roles));
         sessionStorage.setItem("authorization", "Bearer "+jwtToken);
+        sessionStorage.setItem("XSRF-TOKEN", csrfToken);
         console.log(sessionStorage.getItem("authorization"));
 
         navgateTo('/home');
